@@ -2,7 +2,7 @@ const express = require("express");
 
 const ctrl = require("../../controllers/contacts");
 const { validateBody } = require("../../middlewares");
-const { contactSchema } = require("../../schemas");
+const { newContactSchema, updateContactSchema } = require("../../schemas");
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get("/:contactId", ctrl.getById);
 
 router.post(
   "/",
-  validateBody(contactSchema, "missing required name field"),
+  validateBody(newContactSchema, "missing required name field"),
   ctrl.addContact
 );
 
@@ -20,7 +20,7 @@ router.delete("/:contactId", ctrl.deleteContact);
 
 router.put(
   "/:contactId",
-  validateBody(contactSchema, "missing fields"),
+  validateBody(updateContactSchema, "missing fields"),
   ctrl.updateContact
 );
 

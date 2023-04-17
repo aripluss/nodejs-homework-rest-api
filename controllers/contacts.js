@@ -30,9 +30,14 @@ const deleteContact = async (req, res) => {
 };
 
 const updateContact = async (req, res) => {
+  const contactToUpdate = await contactsOperations.getContactById(
+    req.params.contactId
+  );
+  const mergedContactData = { ...contactToUpdate, ...req.body };
+
   const updatedContact = await contactsOperations.updateContact(
     req.params.contactId,
-    req.body
+    mergedContactData
   );
   if (!updatedContact) throw HttpError(404, "Not found");
   res.json(updatedContact);
